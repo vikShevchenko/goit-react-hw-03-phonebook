@@ -6,15 +6,15 @@ import { ContactList } from './ContactList/ContactList.js';
 import Filter from './Filter/Filter.js';
 import { Section, Title } from './App.styled';
 
-const cont = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
+// const cont = [
+//   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+//   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+//   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+//   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+// ];
 export class App extends Component {
   state = {
-    contacts: cont,
+    contacts: [],
     filter: '',
   };
 
@@ -48,6 +48,12 @@ export class App extends Component {
     items.filter(item =>
       item.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
+
+    componentDidUpdate(prevProps, PrevStates){ //Записуе нове в локал якщо є зміни
+      if(PrevStates.contacts !== this.state.contacts){
+        localStorage.setItem("localContacts", JSON.stringify(this.state.contacts))
+      }
+    }
 
   render() {
     const { contacts, filter } = this.state;
